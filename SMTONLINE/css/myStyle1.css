@@ -1,0 +1,9 @@
+﻿.formbody{
+        background-image: url("../pictures/smtWallpaper.jpg");
+        background-position: center;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        margin-left: 10%;
+        margin-right: 10%;
+}

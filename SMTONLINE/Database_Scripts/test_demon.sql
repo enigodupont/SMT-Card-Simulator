@@ -1,0 +1,2 @@
+use SMT;
+INSERT INTO Demons (demon_id,race,lvl,name,ag,dx,hp,lu,ma,mp,st) VALUES(0,"Tyrant",63,"Abaddon",63,60,605,73,43,184,96); INSERT INTO Affinities (demon_id,ailment,almighty,auxilary,dark,elec,fire,theforce,gun,ice,light,phys,recovery) VALUES(0,2,0,2,0,-3,1,0,0,0,0,3,0); INSERT INTO Resistances (demon_id,dark,elec,fire,theforce,gun,ice,light,phys) VALUES(0,'-','weak','repel','-','-','-','-','-'); 

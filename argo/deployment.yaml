@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smtonline
+  labels:
+    run: smtonline
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: smtonline
+  template:
+    metadata:
+      labels:
+        run: smtonline
+    spec:
+      affinity:
+        # Try to put each pod on a different node in the K8s cluster
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: run
+                    operator: In
+                    values:
+                      - smtonline
+                topologyKey: kubernetes.io/hostname
+      volumes:
+      - name: smtonline-secrets
+        secret:
+          secretName: smtonline-secret-mount
+      containers:
+      - name: smtonline
+        image: jc6482/smtonline:default_tag_change_me
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: "/var/www/Web.config"
+          subPath: "Web.config"
+          readOnly: true
+          name: smtonline-secrets
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "300Mi"
+            cpu: "300m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smtonline
+spec:
+  selector:
+    run: smtonline
+  ports:
+    - name: ui-port
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: smtonline
+spec:
+  rules:
+    - host: smtonline.eniworks.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: smtonline
+                port:
+                  number: 80
+# ---
+# apiVersion: autoscaling/v2beta2
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: smtonline
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: smtonline
+#   minReplicas: 1
+#   maxReplicas: 2
+#   metrics:
+#   - type: Resource
+#     resource:
+#       name: cpu
+#       target:
+#         type: Utilization
+#         averageUtilization: 80
