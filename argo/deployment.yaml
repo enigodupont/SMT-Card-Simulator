@@ -33,7 +33,7 @@ spec:
           secretName: smtonline-secret-mount
       containers:
       - name: smtonline
-        image: jc6482/smtonline:default_tag_change_me
+        image: enigodupont/smtonline:default_tag_change_me
         imagePullPolicy: Always 
         ports:
         - containerPort: 80
