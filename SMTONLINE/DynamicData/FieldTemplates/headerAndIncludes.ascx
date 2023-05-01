@@ -11,8 +11,7 @@
 <!-- This is for Bootstrap-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link runat="server" type="text/css" rel="stylesheet" href="/css/myStyle1.css" />
-
-<script async defer data-website-id="59a18e58-f446-4938-bf7f-15e6cb74908f" src="https://umami.eniworks.net/umami.js"></script>
+<script async src="https://umami.eniworks.net/script.js" data-website-id="59a18e58-f446-4938-bf7f-15e6cb74908f"></script>
 <div id="header">
     <div id="banner">
 
